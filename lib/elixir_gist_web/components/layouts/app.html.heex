@@ -97,3 +97,18 @@
     <.flash_group flash={@flash} />
     <%= @inner_content %>
 </main>
+<footer class="h-[120px] w-full flex justify-center text-white px-16 py-20 font-brand font-regular text-sm">
+    <div class="w-full px-10">
+        <div class="border-t-[1px] border-white w-full"></div>
+        <div class="flex items-center py-6 space-x-2">
+            <img src="/images/gist-logo.svg" alt="Elixir Logo" class="w-8 h-8">
+            <p>&copy; 2023 Martha M. Nieto</p>
+            <div class="px-4 space-x-7 text-mLavander-dark">
+                <a href={~p"/"} class="hover:underline">Terms</a>
+                <a href={~p"/"} class="hover:underline">Privacy</a>
+                <a href={~p"/"} class="hover:underline">About</a>
+            </div>
+        </div>
+    </div>
+    
+</footer>
