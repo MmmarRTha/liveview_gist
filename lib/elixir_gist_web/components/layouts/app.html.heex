@@ -18,8 +18,82 @@
         </div>
     </div>
     <div class="relative">
-        <button class="img-down-arrow" type="button" id="user-menu-button">
-            <img src="/images/user-image.svg" alt="Avatar" class="w-8 h-8 round-image-padding" />
+        <button class="img-down-arrow" type="button" id="user-menu-button" phx-click={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}>
+            <img src="/images/user-image.svg" alt="Profile Image" class="w-8 h-8 round-image-padding" />
         </button>
+        <div
+            id="dropdown_menu"
+            class="absolute right-0 w-48 py-2 mt-2 border border-white rounded-lg shadow-xl dropdown-menu-arrow bg-mDark"
+            hidden="true"
+        >
+            <%= if @current_user do %>
+                <.link  
+                    href={~p"/users/settings"}
+                    class="border-b border-white border-opacity-50 menu-item"
+                    role="menuitem"
+                    tabindex="-1"
+                    method="get"
+                    id="user-menu-item-0"
+                > 
+                Signed in as <%= @current_user.email %>
+                </.link>
+                <.link  
+                    href="#"
+                    class="menu-item"
+                    role="menuitem"
+                    tabindex="-1"
+                    method="get"
+                    id="user-menu-item-1"
+                > 
+                Your gists
+                </.link>
+                <.link  
+                    href="#"
+                    class="border-b border-white border-opacity-50 menu-item"
+                    role="menuitem"
+                    tabindex="-1"
+                    method="get"
+                    id="user-menu-item-2"
+                > 
+                Saved gists
+                </.link>
+                <.link  
+                    href={~p"/users/log_out"}
+                    class="menu-item"
+                    role="menuitem"
+                    tabindex="-1"
+                    method="delete"
+                    id="user-menu-item-3"
+                > 
+                Sign Out
+                </.link>
+            <% else %>
+                <.link  
+                    href={~p"/users/log_in"}
+                    class="border-b border-white border-opacity-50 menu-item"
+                    role="menuitem"
+                    tabindex="-1"
+                    method="get"
+                    id="user-menu-item-0"
+                > 
+                Sign In
+                </.link>
+                <.link  
+                    href={~p"/users/register"}
+                    class="menu-item"
+                    role="menuitem"
+                    tabindex="-1"
+                    method="get"
+                    id="user-menu-item-1"
+                > 
+                Register
+                </.link>
+            <% end %>
+        </div>
     </div>
 </header>
+
+<main>
+    <.flash_group flash={@flash} />
+    <%= @inner_content %>
+</main>

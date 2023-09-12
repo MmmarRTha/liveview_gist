@@ -17,6 +17,21 @@
     font-style: normal;
 }
 
+.dropdown-menu-arrow::before {
+    content: "";
+    position: absolute;
+    left: calc(95% - 12px);
+    top: -3px;
+    transform: translateY(-50%);
+    border-width: 0 5px 5px 5px;
+    border-color: transparent transparent white transparent;
+    border-style: solid;    
+}
+
+.menu-item {
+    @apply block px-4 py-2 text-sm text-white hover:bg-mDark-light;
+}
+
 .round-image-padding {
     border-radius: 50%;
     border: 1.5px solid #ffffff;
