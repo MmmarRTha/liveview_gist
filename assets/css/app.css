@@ -37,6 +37,31 @@
     @apply block px-4 py-2 text-sm text-white hover:bg-mDark-light;
 }
 
+form input[type="text"] {
+    @apply text-xs text-white border border-white bg-mDark-dark font-brand font-regular;
+}
+
+form input[type="text"]:focus {
+    @apply focus:outline-none focus:border-mLavander focus:ring-0;
+}
+
+.textarea {
+    @apply bg-mDark-dark font-brand font-regular text-white text-xs border border-white h-[300px] resize-none;
+    border-top: none;
+}
+
+.textarea:focus {
+    @apply focus:outline-none focus:border-white focus:ring-0;
+}
+
+.create_btn {
+    @apply text-base text-white border border-white rounded-md font-regular bg-mPurple font-brand;
+}
+
+.create_btn:hover {
+    @apply text-black hover:bg-mPurple-light border-mPurple-light;
+}
+
 .round-image-padding {
     border-radius: 50%;
     border: 1.5px solid #ffffff;
