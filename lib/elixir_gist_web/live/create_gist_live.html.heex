@@ -14,7 +14,7 @@
             <%= textarea(@form, :markup_text, class: " textarea w-full rounded-b-md", placeholder: "Insert code here..", spellcheck: "false", automplete: "off", phx_debounce: "blur") %>
         </div>
         <div class="flex justify-end">
-            <.button class="create_btn">Create gist</.button>
+            <.button class="create_btn" phx-disable-with="Creating...">Create gist</.button>
         </div>
     </div>
 </.form>
