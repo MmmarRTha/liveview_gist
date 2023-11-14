@@ -18,11 +18,17 @@
         </div>
     </div>
     <div class="relative">
-        <button class="img-down-arrow" type="button" id="user-menu-button" phx-click={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}>
+        <button 
+            class="img-down-arrow" 
+            type="button" 
+            id="user-menu-button" 
+            phx-click={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}
+        >
             <img src="/images/user-image.svg" alt="Profile Image" class="w-8 h-8 round-image-padding" />
         </button>
         <div
             id="dropdown_menu"
+            phx-click-away={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}
             class="absolute right-0 w-48 py-2 mt-2 border border-white rounded-lg shadow-xl dropdown-menu-arrow bg-mDark"
             hidden="true"
         >
