@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :elixir_gist, ElixirGist.Repo,
-  username: "backend_martha",
-  password: "backend_pop",
+  username: "backend_elixir",
+  password: "postgres_p0p",
   hostname: "localhost",
   database: "elixir_gist_dev",
   stacktrace: true,
