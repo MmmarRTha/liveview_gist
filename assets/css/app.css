@@ -72,7 +72,7 @@ form input[type="text"]:focus {
 }
 
 .syntax-numbers {
-    @apply border border-white font-brand text-xs text-mDark-light bg-mSyntax h-auto w-[54px] text-right overflow-hidden resize-none;
+    @apply border border-white font-brand text-xs text-mDark-light bg-mSyntax h-auto w-[54px] text-right overflow-hidden resize-none py-[12px];
     border-right: none;
     border-top: none;
 }
