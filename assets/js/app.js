@@ -25,6 +25,16 @@ import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+
+function updateLineNumbers(value) {
+    const lineNumberText = document.querySelector("#line-numbers")
+    if (!lineNumberText) return;
+
+    const lines = value.split("\n");
+    const numbers = lines.map((_, index) => index + 1).join("\n") + "\n";
+    lineNumberText.value = numbers;
+};
+
 let Hooks = {};
 
 Hooks.Highlight = {
@@ -36,6 +46,7 @@ Hooks.Highlight = {
             codeBlock.className = codeBlock.className.replace(/language-\S+/g, "");
             codeBlock.classList.add(`language-${this.getSyntaxType(name)}`);
             hljs.highlightElement(codeBlock);
+            updateLineNumbers(codeBlock.textContent)
         }
     },
 
@@ -54,6 +65,7 @@ Hooks.Highlight = {
                 return "elixir";
         }
     }
+    //NOTE: no need trimCodeBlock for UI
 };
 
 Hooks.UpdateLineNumbers = {
@@ -61,7 +73,7 @@ Hooks.UpdateLineNumbers = {
         const lineNumberText = document.querySelector("#line-numbers")
 
         this.el.addEventListener("input", () => {
-            this.updateLineNumbers()
+            updateLineNumbers(this.el.value)
         })
 
         this.el.addEventListener("scroll", () => {
@@ -83,16 +95,7 @@ Hooks.UpdateLineNumbers = {
             lineNumberText.value = "1\n"
         })
 
-        this.updateLineNumbers()
-    },
-
-    updateLineNumbers() {
-        const lineNumberText = document.querySelector("#line-numbers")
-        if (!lineNumberText) return;
-
-        const lines = this.el.value.split("\n");
-        const numbers = lines.map((_, index) => index + 1).join("\n") + "\n";
-        lineNumberText.value = numbers;
+        updateLineNumbers(this.el.value)
     }
 };
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks: Hooks})
