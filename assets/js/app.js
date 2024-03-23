@@ -65,6 +65,7 @@ Hooks.Highlight = {
                 return "elixir";
         }
     }
+    //NOTE: no need trimCodeBlock for UI
 };
 
 Hooks.UpdateLineNumbers = {
