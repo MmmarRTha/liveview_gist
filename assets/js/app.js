@@ -98,6 +98,22 @@ Hooks.UpdateLineNumbers = {
         updateLineNumbers(this.el.value)
     }
 };
+
+Hooks.CopyToClipboard = {
+    mounted() {
+        this.el.addEventListener("click", e => {
+            const textToCopy = this.el.getAttribute("data-clipboard-target");
+            if (textToCopy) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    console.log("Copied to clipboard");
+                }).catch(err => {
+                    console.error("Failed to copy to clipboard: ", err);
+                })
+            }
+        })
+    }
+};
+
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks: Hooks})
 
 // Show progress bar on live navigation and form submits
