@@ -2,42 +2,4 @@
     <h1 class="text-3xl font-bold text-white font-brand">Instantly share Elixir code, notes and snippets.</h1>
 </div>
 
-<.form for={@form} phx-submit="create" phx-change="validate">
-    <div class="justify-center w-full mb-10 space-y-4 px-28">
-        <.input 
-            field={@form[:description]} 
-            placeholder="Gist description" 
-            autocomplete="off" 
-            phx-debounce="blur"
-        />
-        <div>
-            <div class="flex items-center p-2 border bg-mDark rounded-t-md">
-                <div class="w-[300px] mb-2">
-                    <.input 
-                        field={@form[:name]} 
-                        placeholder="Filename including..." 
-                        autocomplete="off" 
-                        phx-debounce="blur"
-                    />
-                </div>
-            </div>
-            <div id="gist-wrapper" class="flex w-full" phx-update="ignore">
-                <textarea id="line-numbers" class="line-numbers rounded-bl-md" readonly>
-                    <%= "1\n" %>
-                </textarea>
-                <%= textarea(@form, :markup_text, 
-                    id: "gist-textarea",
-                    phx_hook: "UpdateLineNumbers",
-                    class: " textarea w-full rounded-br-md", 
-                    placeholder: "Insert code here..", 
-                    spellcheck: "false", 
-                    automplete: "off", 
-                    phx_debounce: "blur"
-                ) %>
-            </div>
-        </div>
-        <div class="flex justify-end">
-            <.button class="create_btn" phx-disable-with="Creating...">Create gist</.button>
-        </div>
-    </div>
-</.form>
+<.live_component module={GistFormComponent} id={:new} current_user={@current_user} />
