@@ -26,8 +26,8 @@ import topbar from "../vendor/topbar"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
-function updateLineNumbers(value) {
-    const lineNumberText = document.querySelector("#line-numbers")
+function updateLineNumbers(value, element_id="#line-numbers") {
+    const lineNumberText = document.querySelector(element_id)
     if (!lineNumberText) return;
 
     const lines = value.split("\n");
@@ -46,7 +46,7 @@ Hooks.Highlight = {
             codeBlock.className = codeBlock.className.replace(/language-\S+/g, "");
             codeBlock.classList.add(`language-${this.getSyntaxType(name)}`);
             hljs.highlightElement(codeBlock);
-            updateLineNumbers(codeBlock.textContent)
+            updateLineNumbers(codeBlock.textContent, "#syntax-numbers")
         }
     },
 
@@ -113,6 +113,21 @@ Hooks.CopyToClipboard = {
         })
     }
 };
+
+Hooks.ToggleEdit = {
+    mounted() {
+        this.el.addEventListener("click", e => {
+            const edit = document.getElementById("edit-section")
+            const syntax = document.getElementById("syntax-section")
+            if (edit && syntax) {
+                edit.style.display = "block";
+                syntax.style.display = "none";
+            }
+        })
+    }
+};
+
+//TODO: add a hook to handle a current year.
 
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks: Hooks})
 

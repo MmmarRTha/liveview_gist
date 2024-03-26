@@ -70,6 +70,7 @@ defmodule ElixirGist.Gists do
 
   """
   def update_gist(%Gist{} = gist, attrs) do
+      IO.inspect(gist)
     gist
     |> Gist.changeset(attrs)
     |> Repo.update()
