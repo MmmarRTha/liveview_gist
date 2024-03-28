@@ -13,6 +13,7 @@ defmodule ElixirGistWeb.GistFormComponent do
     <div>
       <.form for={@form} phx-submit="create" phx-change="validate" phx-target={@myself}>
         <div class="justify-center w-full mb-10 space-y-4 px-28">
+          <%= hidden_input(@form, :id, value: @id) %>
           <.input
             field={@form[:description]}
             placeholder="Gist description"
@@ -68,14 +69,14 @@ defmodule ElixirGistWeb.GistFormComponent do
   end
 
   def handle_event("create", %{"gist" => params}, socket) do
-    if is_nil(params["id"]) do
-      create(params, socket)
+    if params["id"] == "new" do
+      new_gist(params, socket)
     else
-      update(params, socket)
+      edit_gist(params, socket)
     end
   end
 
-  def create(params, socket) do
+  def new_gist(params, socket) do
     case Gists.create_gist(socket.assigns.current_user, params) do
       {:ok, gist} ->
         socket = push_event(socket, "clear-textareas", %{})
@@ -88,15 +89,13 @@ defmodule ElixirGistWeb.GistFormComponent do
     end
   end
 
-  def update(params, socket) do
-    case Gists.update_gist(params, socket) do
+  def edit_gist(params, socket) do
+    case Gists.update_gist(socket.assigns.current_user, params) do
       {:ok, gist} ->
-        changeset = Gists.change_gist(%Gist{})
-        socket = assign(socket, :form, to_form(changeset))
-        {:noreply, push_patch(socket, to: ~p"/gist?#{[id: gist]}")}
+        {:noreply, push_navigate(socket, to: ~p"/gist?#{[id: gist]}")}
 
       {:error, message} ->
-        socket = put_flash(socket, :error, message)
+        socket = put_flash(socket, :error, "An error occurred when updating gist: #{message}")
         {:noreply, socket}
     end
   end
