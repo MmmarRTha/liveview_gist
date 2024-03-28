@@ -5,12 +5,6 @@ defmodule ElixirGistWeb.GistFormComponent do
   alias ElixirGist.{Gists, Gists.Gist}
 
   def mount(socket) do
-    socket =
-      assign(
-        socket,
-        form: to_form(Gists.change_gist(%Gist{}))
-      )
-
     {:ok, socket}
   end
 
@@ -19,6 +13,7 @@ defmodule ElixirGistWeb.GistFormComponent do
     <div>
       <.form for={@form} phx-submit="create" phx-change="validate" phx-target={@myself}>
         <div class="justify-center w-full mb-10 space-y-4 px-28">
+          <%= hidden_input(@form, :id, value: @id) %>
           <.input
             field={@form[:description]}
             placeholder="Gist description"
@@ -52,7 +47,11 @@ defmodule ElixirGistWeb.GistFormComponent do
             </div>
           </div>
           <div class="flex justify-end">
-            <.button class="create_btn" phx-disable-with="Creating...">Create gist</.button>
+            <%= if @id == :new do %>
+              <.button class="create_btn" phx-disable-with="Creating...">Create gist</.button>
+            <% else %>
+              <.button class="create_btn" phx-disable-with="Updating...">Update gist</.button>
+            <% end %>
           </div>
         </div>
       </.form>
@@ -70,6 +69,14 @@ defmodule ElixirGistWeb.GistFormComponent do
   end
 
   def handle_event("create", %{"gist" => params}, socket) do
+    if params["id"] == "new" do
+      new_gist(params, socket)
+    else
+      edit_gist(params, socket)
+    end
+  end
+
+  def new_gist(params, socket) do
     case Gists.create_gist(socket.assigns.current_user, params) do
       {:ok, gist} ->
         socket = push_event(socket, "clear-textareas", %{})
@@ -79,6 +86,17 @@ defmodule ElixirGistWeb.GistFormComponent do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}
+    end
+  end
+
+  def edit_gist(params, socket) do
+    case Gists.update_gist(socket.assigns.current_user, params) do
+      {:ok, gist} ->
+        {:noreply, push_navigate(socket, to: ~p"/gist?#{[id: gist]}")}
+
+      {:error, message} ->
+        socket = put_flash(socket, :error, "An error occurred when updating gist: #{message}")
+        {:noreply, socket}
     end
   end
 end
