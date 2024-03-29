@@ -5,19 +5,24 @@ defmodule ElixirGistWeb.UserConfirmationLive do
 
   def render(%{live_action: :edit} = assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">Confirm Account</.header>
-
-      <.simple_form for={@form} id="confirmation_form" phx-submit="confirm_account">
+    <div class="flex flex-col items-center justify-center m-gradient">
+      <h1 class="py-2 text-3xl font-bold text-white font-brand">
+        Confirm Account
+      </h1>
+    </div>
+    <div class="max-w-sm mx-auto">
+      <.form for={@form} id="confirmation_form" phx-submit="confirm_account">
         <.input field={@form[:token]} type="hidden" />
-        <:actions>
-          <.button phx-disable-with="Confirming..." class="w-full">Confirm my account</.button>
-        </:actions>
-      </.simple_form>
+        <.button phx-disable-with="Confirming..." class="w-full create_button">
+          Confirm my account
+        </.button>
+      </.form>
 
-      <p class="text-center mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
+      <p class="mt-4 font-bold text-center text-white text-l font-brand">
+        <.link href={~p"/users/register"} class="text-mLavender-dark hover:underline">
+          Register
+        </.link>
+        | <.link href={~p"/users/log_in"} class="text-mLavender-dark hover:underline">Log in</.link>
       </p>
     </div>
     """

@@ -5,34 +5,36 @@ defmodule ElixirGistWeb.UserResetPasswordLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">Reset Password</.header>
-
-      <.simple_form
-        for={@form}
-        id="reset_password_form"
-        phx-submit="reset_password"
-        phx-change="validate"
-      >
+    <div class="flex flex-col items-center justify-center m-gradient">
+      <h1 class="py-2 text-3xl font-bold text-white font-brand">
+        Reset Password
+      </h1>
+    </div>
+    <div class="max-w-sm mx-auto">
+      <.form for={@form} id="reset_password_form" phx-submit="reset_password" phx-change="validate">
         <.error :if={@form.errors != []}>
           Oops, something went wrong! Please check the errors below.
         </.error>
 
-        <.input field={@form[:password]} type="password" label="New password" required />
+        <.input field={@form[:password]} type="password" placeholder="New password" required />
         <.input
           field={@form[:password_confirmation]}
           type="password"
-          label="Confirm new password"
+          placeholder="Confirm new password"
           required
         />
-        <:actions>
-          <.button phx-disable-with="Resetting..." class="w-full">Reset Password</.button>
-        </:actions>
-      </.simple_form>
+        <div class="pt-6">
+          <.button phx-disable-with="Resetting..." class="w-full create_button">
+            Reset Password
+          </.button>
+        </div>
+      </.form>
 
-      <p class="text-center text-sm mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
+      <p class="mt-4 font-bold text-center text-white text-l font-brand">
+        <.link href={~p"/users/register"} class="text-mLavender-dark hover:underline">
+          Register
+        </.link>
+        | <.link href={~p"/users/log_in"} class="text-mLavender-dark hover:underline">Log in</.link>
       </p>
     </div>
     """
