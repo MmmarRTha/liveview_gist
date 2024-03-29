@@ -37,12 +37,28 @@
     @apply block px-4 py-2 text-sm text-white hover:bg-mDark-light;
 }
 
-form input[type="text"] {
+form input[type="text"], input[type="email"], input[type="password"] {
     @apply text-xs text-white border border-white bg-mDark-dark font-brand font-regular;
 }
 
-form input[type="text"]:focus {
+form input[type="text"], input[type="email"], input[type="password"]:focus {
     @apply focus:outline-none focus:border-mLavander focus:ring-0;
+}
+
+.syntax-area {
+    @apply h-auto text-xs border border-white bg-mSyntax;
+    border-top: none;
+    border-left: none;
+}
+
+.syntax-numbers {
+    @apply border border-white font-brand py-[12px] text-xs text-mDark-light bg-mSyntax h-auto w-[54px] text-right overflow-hidden resize-none;
+    border-right: none;
+    border-top: none;
+}
+
+.syntax-numbers:focus {
+    @apply focus:outline-none focus:border-white focus:ring-0;
 }
 
 .textarea {
@@ -62,22 +78,6 @@ form input[type="text"]:focus {
 }
 
 .line-numbers:focus {
-    @apply focus:outline-none focus:border-white focus:ring-0;
-}
-
-.syntax-area {
-    @apply h-auto text-xs border border-white bg-mSyntax;
-    border-top: none;
-    border-left: none;
-}
-
-.syntax-numbers {
-    @apply border border-white font-brand text-xs text-mDark-light bg-mSyntax h-auto w-[54px] text-right overflow-hidden resize-none py-[12px];
-    border-right: none;
-    border-top: none;
-}
-
-.syntax-numbers:focus {
     @apply focus:outline-none focus:border-white focus:ring-0;
 }
 

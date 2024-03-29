@@ -5,24 +5,30 @@ defmodule ElixirGistWeb.UserConfirmationInstructionsLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+    <div class="flex flex-col items-center justify-center m-gradient">
+      <h1 class="py-2 text-3xl font-bold text-white font-brand">
         No confirmation instructions received?
-        <:subtitle>We'll send a new confirmation link to your inbox</:subtitle>
-      </.header>
+        <h3 class="font-bold text-white font-brand text-l">
+          We'll send a new confirmation link to your inbox
+        </h3>
+      </h1>
+    </div>
 
-      <.simple_form for={@form} id="resend_confirmation_form" phx-submit="send_instructions">
+      <div class="max-w-sm mx-auto">
+      <.form for={@form} id="resend_confirmation_form" phx-submit="send_instructions">
         <.input field={@form[:email]} type="email" placeholder="Email" required />
-        <:actions>
-          <.button phx-disable-with="Sending..." class="w-full">
+        <div class="pt-6">
+          <.button phx-disable-with="Sending..." class="w-full create_button">
             Resend confirmation instructions
           </.button>
-        </:actions>
-      </.simple_form>
+        </div>
+      </.form>
 
-      <p class="text-center mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
+      <p class="mt-4 font-bold text-center text-white text-l font-brand">
+        <.link href={~p"/users/register"} class="text-mLavender-dark hover:underline">
+          Register
+        </.link>
+        | <.link href={~p"/users/log_in"} class="text-mLavender-dark hover:underline">Log in</.link>
       </p>
     </div>
     """
